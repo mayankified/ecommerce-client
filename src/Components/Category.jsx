@@ -35,9 +35,9 @@ const Category = () => {
     ]
 
     return (
-        <section className="pt-24 sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8">
+        <section className="pt-24 sm:pt-32 xl:mx-auto xl:max-w-7xl px-10">
             <div className="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
-                <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+                <h2 className="text-[30px] w-full font-bold tracking-tight text-gray-900">
                     Shop by Category
                 </h2>
             </div>
