@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 
 const Createprod = () => {
   const [image, setImage] = useState(null);
-  const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
   const [formData, setFormData] = useState({
@@ -18,31 +17,16 @@ const Createprod = () => {
     rating: 0,
     numReviews: 0,
     isFeatured: false,
-    image: null,
+    image: ''
   });
 
-
-  const categories = [{
-    name: 'Electronics',
-    id: 1
-  },
-  {
-    name: 'Mens',
-    id: 2
-  },
-  {
-    name: 'Women',
-    id: 3
-  },
-  {
-    name: 'Watches',
-    id: 4
-  },
-  {
-    name: 'Others',
-    id: 5
-  },
-  ]
+  const categories = [
+    { name: 'Electronics', id: 1 },
+    { name: 'Mens', id: 2 },
+    { name: 'Women', id: 3 },
+    { name: 'Watches', id: 4 },
+    { name: 'Others', id: 5 },
+  ];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,52 +34,40 @@ const Createprod = () => {
       ...formData,
       [name]: value,
     });
-    console.log(formData.category)
-  };
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    await uploadImage();
-
-
-    axios.post('http://localhost:5000/api/v1/prod/', formData)
-      .then(response => {
-        toast.success('Product created successfully');
-      })
-      .catch(error => toast.error('Error creating product:', error));
   };
 
   const uploadImage = async () => {
     setLoading(true);
     const data = new FormData();
     data.append("file", image);
-    data.append(
-      "upload_preset", 'hs9x732a'
-    );
+    data.append("upload_preset", 'hs9x732a');
     data.append("cloud_name", 'dolzqjqfs');
     data.append("folder", "Cloudinary-React");
 
     try {
-      const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/dolzqjqfs/image/upload`, data);
-
-      setUrl(response.data.public_id);
-      setImage(response.data.secure_url)
-      setFormData({
-        ...formData,
-        image: [{
-          id: response.data.public_id,
-          url: response.data.secure_url
-        }],
-      });
-
-
-      setLoading(false);
+      const response = await axios.post(`https://api.cloudinary.com/v1_1/dolzqjqfs/image/upload`, data);
+      setLoading(false); 
+      return response.data.secure_url;
     } catch (error) {
       setLoading(false);
+      console.error('Error uploading image:', error);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!image) {
+      toast.error('Please select an image');
+      return;
+    }
+
+    const link =await uploadImage();
+    const updatedFormData = { ...formData, image:link};
+    axios.post('http://localhost:5000/api/v1/prod/', updatedFormData)
+      .then(response => {
+        toast.success('Product created successfully');
+      })
+      .catch(error => toast.error('Error creating product:', error));
   };
 
   const handleImageChange = (event) => {
@@ -109,71 +81,9 @@ const Createprod = () => {
     };
   };
 
-  const handleResetClick = () => {
-    setPreview(null);
-    setImage(null);
-  };
+
 
   return (
-    // <div className='flex flex-col items-center'>
-    //   <h1 className='text-[40px]'>Create Product</h1>
-    //   <form onSubmit={handleSubmit} className='flex flex-col items-center'>
-    //     <label className='items-center'>
-    //       Name:
-    //       <input  type="text" name="name" value={formData.name} onChange={handleInputChange} />
-    //     </label>
-    //     <label className="block text-sm font-medium text-gray-700">
-    //       Description:
-    //       <textarea name="description" value={formData.description} onChange={handleInputChange}></textarea>
-    //     </label>
-    //     <label>
-    //       Rich Description:
-    //       <textarea name="richDescription" value={formData.richDescription} onChange={handleInputChange}></textarea>
-    //     </label>
-    //     <label>
-    //       Brand:
-    //       <input  type="text" name="brand" value={formData.brand} onChange={handleInputChange} />
-    //     </label>
-    //     <label>
-    //       Price:
-    //       <input  type="number" name="price" value={formData.price} onChange={handleInputChange} />
-    //     </label>
-
-
-
-    //     <label className="block text-sm font-medium text-gray-700">
-    //       Category:
-    //       <select name="category" className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" value={formData.category} onChange={handleInputChange}>
-    //         <option value="">Select a category</option>
-    //         {categories.map(category => (
-    //           <option key={category.id} value={category.name}>{category.name}</option>
-    //         ))}
-    //       </select>
-    //     </label>
-    //     <label>
-    //       Count in Stock:
-    //       <input  type="number" name="countInStock" value={formData.countInStock} onChange={handleInputChange} />
-    //     </label>
-    //     <label>
-    //       Rating:
-    //       <input  type="number" name="rating" value={formData.rating} onChange={handleInputChange} />
-    //     </label>
-    //     <label>
-    //       Number of Reviews:
-    //       <input  type="number" name="numReviews" value={formData.numReviews} onChange={handleInputChange} />
-    //     </label>
-    // <label>
-    //   Featured:
-    //   <input  type="checkbox" name="isFeatured" checked={formData.isFeatured} onChange={() => setFormData({ ...formData, isFeatured: !formData.isFeatured })} />
-    // </label>
-    //     <label>
-    //       Image:
-    //       <input  type="file" name="image" accept="image/*" onChange={handleImageChange} />
-    //     </label>
-    //     <button type="submit">Submit</button>
-    //     {/* <button onClick={uploadImage} >Image</button> */}
-    //   </form>
-    // </div>
 
     <div className="w-screen flex items-center justify-center bg-stone-100">
       <div className="p-10 rounded shadow-sm bg-stone-50 w-[50%]">
@@ -312,7 +222,7 @@ const Createprod = () => {
                 className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
               >
                 <span>Upload a file</span>
-                <input  id="file-upload"  type="file" className='sr-only' name="image" accept="image/*" onChange={handleImageChange} />
+                <input id="file-upload" type="file" className='sr-only' name="image" accept="image/*" onChange={handleImageChange} />
               </label>
             </div>
             <p className="text-xs text-gray-500">PNG, JPG up to 5MB</p>
