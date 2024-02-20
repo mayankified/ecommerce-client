@@ -12,10 +12,10 @@ const Createprod = () => {
     richDescription: '',
     brand: '',
     price: 0,
+    rating: 0,
+    discount: 0,
     category: '',
     countInStock: 0,
-    rating: 0,
-    numReviews: 0,
     isFeatured: false,
     image: ''
   });
@@ -46,7 +46,7 @@ const Createprod = () => {
 
     try {
       const response = await axios.post(`https://api.cloudinary.com/v1_1/dolzqjqfs/image/upload`, data);
-      setLoading(false); 
+      setLoading(false);
       return response.data.secure_url;
     } catch (error) {
       setLoading(false);
@@ -61,8 +61,8 @@ const Createprod = () => {
       return;
     }
 
-    const link =await uploadImage();
-    const updatedFormData = { ...formData, image:link};
+    const link = await uploadImage();
+    const updatedFormData = { ...formData, image: link };
     axios.post('http://localhost:5000/api/v1/prod/', updatedFormData)
       .then(response => {
         toast.success('Product created successfully');
@@ -85,9 +85,9 @@ const Createprod = () => {
 
   return (
 
-    <div className="w-screen flex items-center justify-center bg-stone-100">
-      <div className="p-10 rounded shadow-sm bg-stone-50 w-[50%]">
-        <div className="mb-6 p-10 bg-white -m-10">
+    <div className="w-full flex items-center justify-center bg-stone-100">
+      <div className="p-10 rounded shadow-sm bg-stone-50 md:w-[50%] w-[90%]">
+        <div className="mb-6 w-full p-10 bg-white -m-10">
           <h1 className="font-bold text-2xl text-[#121212]">Create product</h1>
         </div>
         <form onSubmit={handleSubmit}>
@@ -177,6 +177,7 @@ const Createprod = () => {
                 onChange={handleInputChange}
                 type="number"
                 rows="5"
+                min={0}
                 placeholder=""
                 className="mt-2 px-6 py-2 mx-2 shadow rounded w-full"
               />
@@ -188,10 +189,45 @@ const Createprod = () => {
               <input
                 id="countInStock"
                 name="countInStock"
+                min={0}
                 value={formData.countInStock}
                 onChange={handleInputChange}
                 type="number"
                 rows="5"
+                placeholder=""
+                className="mt-2 px-6 py-2 mx-2 shadow rounded w-full"
+              />
+            </div>
+          </div>
+
+
+          <div className="flex justify-around">
+
+            <div className="flex flex-col mb-4 w-[20%]">
+              <label htmlFor="price">Discount[%]</label>
+              <input
+                id="discount"
+                name="discount"
+                value={formData.discount}
+                max={100}
+                min={0}
+                onChange={handleInputChange}
+                type="number"
+                placeholder="%"
+                className="mt-2 px-6 py-2 mx-2 shadow rounded w-full"
+              />
+            </div>
+
+            <div className="flex flex-col mb-4 w-[20%]">
+              <label htmlFor="rating">Rating ⭐[1-5]</label>
+              <input
+                id="rating"
+                name="rating"
+                max={5}
+                min={0}
+                value={formData.rating}
+                onChange={handleInputChange}
+                type="number"
                 placeholder=""
                 className="mt-2 px-6 py-2 mx-2 shadow rounded w-full"
               />

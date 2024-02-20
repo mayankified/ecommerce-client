@@ -4,7 +4,7 @@ import { signup } from '../Features/Userslice';
 import { toast } from 'react-toastify';
 import { Link } from "react-router-dom";
 import img2 from '../images/img2.png';
-import './Login.css';
+// import './Login.css';
 
 
 
