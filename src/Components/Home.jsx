@@ -16,7 +16,6 @@ export default function Home() {
 
   return (
     <>
-    <Cart/>
     <Navbar/>
     <Hero/>
     <Category/>

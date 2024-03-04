@@ -2,10 +2,12 @@ import React from 'react'
 import Createprod from './Components/admin/Createprod'
 import './Styles/App.css'
 import Home from './Components/Home'
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Signup  from './Components/Signup';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Signup from './Components/Signup';
 import Login from './Components/Login';
 import ForgotPassword from './Components/ForgotPassword';
+import Prodcat from './Components/Prodcat';
+import Cart from './Components/Cart';
 const App = () => {
   return (
     // <div>App</div>
@@ -16,11 +18,14 @@ const App = () => {
 
         <Route path='/' element={<Home />} />
         <Route path='/admin' element={<Createprod />} />
-        <Route path='/Signup' element={<Signup />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/products/:cat' element={<Prodcat />} />
+
         <Route path='/changepassword' element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path='/Signup' element={<Signup />} />
       </Routes>
+      <Cart />
     </BrowserRouter>
   )
 }
