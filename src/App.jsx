@@ -8,6 +8,7 @@ import Login from './Components/Login';
 import ForgotPassword from './Components/ForgotPassword';
 import Prodcat from './Components/Prodcat';
 import Cart from './Components/Cart';
+import Items from './Components/Items';
 const App = () => {
   return (
     // <div>App</div>
@@ -20,6 +21,7 @@ const App = () => {
         <Route path='/admin' element={<Createprod />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/products/:cat' element={<Prodcat />} />
+        <Route path='/items/:id' element={<Items />} />
 
         <Route path='/changepassword' element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
