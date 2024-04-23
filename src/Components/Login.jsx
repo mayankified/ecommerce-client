@@ -7,6 +7,7 @@ import { login, forgotPassword} from '../Features/Userslice';
 import { toast } from 'react-toastify';
 import { setuser } from '../Features/Userslice';
 import img2 from '../images/img2.png'
+// import { Toast } from 'react-toastify/dist/components';
 // import {img1} from './images/img1'
 
 const Login = () => {
@@ -31,7 +32,7 @@ const Login = () => {
       if (response.responseData.success) {
         toast.success(response.responseData.message);
         dispatch(setuser(response.userData)); // Dispatch setuser action
-        navigate('/home'); // Navigate to home after successful login
+        navigate('/'); // Navigate to home after successful login
       } else {
         setError(response.responseData.message);
       }

@@ -22,7 +22,7 @@ module.exports = {
           primary:'#f7f1e5'
         },
         fontFamily: {
-        //   poppins: ["Poppins", "sans-serif"],
+          poppins: ["Poppins", "sans-serif"],
           protest: ['Protest Riot','sans-serif'],
   
         },

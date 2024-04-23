@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { updatePassword } from '../Features/Userslice';
 import { toast } from 'react-toastify';

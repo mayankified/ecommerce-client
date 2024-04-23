@@ -32,7 +32,7 @@ export default function Signup() {
                 if (response.payload && response.payload.responseData) {
                     toast.success(response.payload.responseData.message);
                     // Navigate to the login page after successful signup
-                    window.location.href = '/';
+                    window.location.href = '/login';
                 } else {
                     setError("Unknown error occurred.");
                 }
