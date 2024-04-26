@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../../Context/ShopContext";
+import Recommendation from "./Recommendation";
 
 function StarRating({ rating }) {
   return (
@@ -28,7 +29,7 @@ function StarRating({ rating }) {
 const Productpage = () => {
   const [product, setProduct] = useState([]);
   const { id } = useParams();
-  const {addToCart} = useContext(ShopContext);
+  const { addToCart } = useContext(ShopContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,43 +47,46 @@ const Productpage = () => {
   }, []);
 
   return (
-    <div className="mx-16 font-poppins grid grid-cols-2 my-10 ">
-      <div className="flex  " id="left ">
-        <div className="pl-2 ">
-          <img src={product.images} alt="" className=" h-96" />
-        </div>
-      </div>
-
-      <div className="mx-4" id="right">
-        <h1 className="text-3xl">{product.name}</h1>
-        <div>
-        <StarRating rating={product.rating} />
-        </div>
-
-        <div className="flex">
-          <div className="pr-2 line-through text-gray-500">
-            Rs. {product.price}
+    <div className="overflow-hidden">
+      <div className="mx-16 pt-10 w-full overflow-hidden justify-around font-poppins flex">
+        <div className="flex  " id="left ">
+          <div className="pl-2 ">
+            <img src={product.images} alt="" className=" h-96" />
           </div>
-          <div className="text-red-700">Rs. {product.price}</div>
         </div>
 
-        <div className="text-[20px] font-normal my-2">
-          <p>{product.description}</p>
-        </div>
+        <div className="mx-4" id="right">
+          <h1 className="text-3xl">{product.name}</h1>
+          <div>
+            <StarRating rating={product.rating} />
+          </div>
 
-        <div className="text-sm my-2 max-w-[500px]">
-          <p>{product.richDescription}</p>
-        </div>
+          <div className="flex">
+            <div className="pr-2 line-through text-gray-500">
+              Rs. {product.price}
+            </div>
+            <div className="text-red-700">Rs. {product.price}</div>
+          </div>
 
-        <button
-          onClick={() => {
-            addToCart(product.id);
-          }}
-          className="my-2 bg-red-500 px-6 py-2 uppercase text-white duration-300 hover:scale-105"
-        >
-          Add to cart
-        </button>
+          <div className="text-[20px] font-normal my-2">
+            <p>{product.description}</p>
+          </div>
+
+          <div className="text-sm my-2 max-w-[500px]">
+            <p>{product.richDescription}</p>
+          </div>
+
+          <button
+            onClick={() => {
+              addToCart(product.id);
+            }}
+            className="my-2 bg-red-500 px-6 py-2 uppercase text-white duration-300 hover:scale-105"
+          >
+            Add to cart
+          </button>
+        </div>
       </div>
+      <Recommendation />
     </div>
   );
 };

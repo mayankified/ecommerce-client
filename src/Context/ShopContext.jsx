@@ -1,5 +1,6 @@
-import React, { createContext, useState, useEffect } from "react";
+import  { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const ShopContext = createContext(null);
 
@@ -34,7 +35,7 @@ const ShopContextProvider = (props) => {
 
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    console.log(cartItems)
+    toast('Item added to Cart')
   };
 
   const removeFromCart = (itemId) => {

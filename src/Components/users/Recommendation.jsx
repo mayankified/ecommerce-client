@@ -18,7 +18,7 @@ function shuffleAndSlice(array) {
   return array.slice(0, 4);
 }
 
-const Latest = () => {
+const Recommendation = () => {
   const [data_product, setProducts] = useState([]);
 
   useEffect(() => {
@@ -38,10 +38,10 @@ const Latest = () => {
   }, []);
 
   return (
-    <div className=" mx-16 mt-20 font-poppins mb-6 ">
+    <div className="mt-16 mx-16 font-poppins mb-6 ">
       <div className="flex justify-center">
         <h1 className="text-2xl font-bold border-b-2 border-black  pb-3">
-          Latest popular product
+          You might also like!
         </h1>{" "}
       </div>
 
@@ -64,4 +64,4 @@ const Latest = () => {
   );
 };
 
-export default Latest;
+export default Recommendation;

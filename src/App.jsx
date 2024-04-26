@@ -2,8 +2,8 @@
 import './Styles/App.css'
 import Home from './Components/users/Home'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Signup from './Components/Signup';
-import Login from './Components/Login';
+import Signup from './Components/Auth/Signup';
+import Login from './Components/Auth/Login';
 import ForgotPassword from './Components/ForgotPassword';
 import { Navbar } from './Components/Navbar';
 import Footer from './Components/users/Footer';
